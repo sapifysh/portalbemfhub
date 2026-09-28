@@ -5,6 +5,7 @@ import { STATUS_LABELS, type StatusValue } from '../lib/constants';
 import type { ParticipantData } from '../lib/api';
 import { getParticipantByNim, isApiConfigured } from '../lib/api';
 import { Header } from '../components/Header';
+import { useTheme } from '../context/ThemeContext';
 
 interface ParticipantDisplay extends ParticipantData {
   id?: string;
@@ -18,6 +19,8 @@ export function ResultPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const apiReady = isApiConfigured();
+  const { theme } = useTheme();
+  const isDark = theme === 'dark';
 
   useEffect(() => {
     async function fetchResult() {
@@ -251,7 +254,18 @@ export function ResultPage() {
     <div className="min-h-screen flex flex-col">
       <Header />
       <main className="flex-1 flex flex-col items-center justify-center px-6 py-16 sm:py-24 relative z-10">
-        <div className="glass-card card-enter p-8 sm:p-12 max-w-3xl w-full">
+        <div 
+          className="glass-card card-enter p-8 sm:p-12 max-w-3xl w-full"
+          style={{
+            background: isDark ? 'rgba(26, 31, 46, 0.6)' : 'rgba(255, 255, 255, 0.7)',
+            backdropFilter: 'blur(24px) saturate(150%)',
+            WebkitBackdropFilter: 'blur(24px) saturate(150%)',
+            border: isDark ? '1px solid rgba(45, 55, 72, 0.4)' : '1px solid rgba(255, 255, 255, 0.6)',
+            boxShadow: isDark 
+              ? '0 8px 32px rgba(0, 0, 0, 0.4), 0 2px 8px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.1)'
+              : '0 8px 32px rgba(0, 0, 0, 0.08), 0 2px 8px rgba(0, 0, 0, 0.04), inset 0 1px 0 rgba(255, 255, 255, 0.3)',
+          }}
+        >
           {renderStatus(participant.status as StatusValue)}
         </div>
       </main>

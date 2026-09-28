@@ -11,6 +11,7 @@ export function HomePage() {
   const navigate = useNavigate();
   const apiReady = isApiConfigured();
   const { theme, toggleTheme } = useTheme();
+  const isDark = theme === 'dark';
 
   const handleSearch = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -94,7 +95,18 @@ export function HomePage() {
         </div>
 
         {/* Search Card — Large Horizontal Glass Surface */}
-        <div className="glass-card card-enter w-full max-w-2xl p-8 sm:p-10">
+        <div 
+          className="glass-card card-enter w-full max-w-2xl p-8 sm:p-10"
+          style={{
+            background: isDark ? 'rgba(26, 31, 46, 0.6)' : 'rgba(255, 255, 255, 0.7)',
+            backdropFilter: 'blur(24px) saturate(150%)',
+            WebkitBackdropFilter: 'blur(24px) saturate(150%)',
+            border: isDark ? '1px solid rgba(45, 55, 72, 0.4)' : '1px solid rgba(255, 255, 255, 0.6)',
+            boxShadow: isDark 
+              ? '0 8px 32px rgba(0, 0, 0, 0.4), 0 2px 8px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.1)'
+              : '0 8px 32px rgba(0, 0, 0, 0.08), 0 2px 8px rgba(0, 0, 0, 0.04), inset 0 1px 0 rgba(255, 255, 255, 0.3)',
+          }}
+        >
           <form onSubmit={handleSearch} className="space-y-6 relative z-10">
             <div className="flex flex-col sm:flex-row gap-4">
               <div className="flex-1 relative">

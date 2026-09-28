@@ -4,11 +4,19 @@ import { useTheme } from '../context/ThemeContext';
 export function Header() {
   const { theme, toggleTheme } = useTheme();
 
+  const isDark = theme === 'dark';
+
   return (
     <header className="relative z-10 w-full">
       <nav
         className="glass-l1 max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 py-4 flex items-center justify-between"
-        style={{ margin: '1rem auto' }}
+        style={{ 
+          margin: '1rem auto',
+          background: isDark ? 'rgba(26, 31, 46, 0.35)' : 'rgba(255, 255, 255, 0.15)',
+          backdropFilter: 'blur(20px) saturate(140%)',
+          WebkitBackdropFilter: 'blur(20px) saturate(140%)',
+          border: isDark ? '1px solid rgba(45, 55, 72, 0.25)' : '1px solid rgba(255, 255, 255, 0.2)',
+        }}
       >
         {/* Left: Logo/Branding */}
         <div className="relative z-10">
